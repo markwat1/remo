@@ -13,7 +13,7 @@ const VERSION:&str = "1";
 #[allow(dead_code)]
 const API_APPLIANCES:&str = "appliance_orders";
 const API_DEVICES:&str = "devices";
-const TOKEN_PATH:&str = ".remo/token.yaml";
+const TOKEN_PATH:&str = ".remo/token.yml";
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about)]
@@ -40,7 +40,7 @@ fn get_token(token_path:&String) -> Result<String,Error>{
     let mut y = String::new();
     let _l = file.read_to_string(&mut y).unwrap();
     let yaml:Value = serde_yaml::from_str(&y).unwrap();
-    let token =  yaml.as_object().unwrap()["token"].as_array().unwrap()[0].as_str().unwrap();
+    let token =  yaml.as_object().unwrap()["token"].as_str().unwrap();
     Ok(token.to_string())
 }
 
