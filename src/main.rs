@@ -13,14 +13,14 @@ const VERSION:&str = "1";
 #[allow(dead_code)]
 const API_APPLIANCES:&str = "appliance_orders";
 const API_DEVICES:&str = "devices";
-const TOKEN_PATH:&str = ".remo/token.yml";
+const DEFAULT_TOKEN_PATH:&str = "~/.remo/token.yml";
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about)]
 struct Args {
     #[arg(short = 'd', long, help = "sqlite database file path")]
     db_path: String,
-    #[arg(short = 't', long, help = "remo api token file(YAML)")]
+    #[arg(short = 't', long, help = "remo api token file(YAML)",default_value = DEFAULT_TOKEN_PATH)]
     token_path: Option<String>,
 }
 
@@ -32,9 +32,9 @@ fn open_db(sqlite_file_path: &String) -> Result<rusqlite::Connection, rusqlite::
 
 fn get_token(token_path:&String) -> Result<String,Error>{
     let mut path = token_path.clone();
-    if path == ""{
-        let home = env::var("HOME").unwrap();
-        path = format!("{}/{}",home,TOKEN_PATH);
+    
+    if path.starts_with("~/") {
+        path = path.replace("~",&env::var("HOME").unwrap());
     }
     let mut file = fs::File::open(path).unwrap();
     let mut y = String::new();
@@ -48,12 +48,8 @@ fn main() {
     let args = Args::parse();
     let db_path = args.db_path;
     let url = format!("{}://{}/{}/{}",PROTOCOL,DOMAIN,VERSION,API_DEVICES);
-    let token_path = match args.token_path {
-        Some(s) => s,
-        None => "".to_string()
-    };
-    let auth = format!("Bearer {}",get_token(&token_path).unwrap());
-
+    let mut token_path = args.token_path.unwrap();
+    let auth = format!("Bearer {}",get_token(&mut token_path).unwrap());
     let client = reqwest::blocking::Client::new();
     let resp = client.get(url).
         header("accept","application/json").
