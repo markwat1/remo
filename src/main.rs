@@ -4,7 +4,7 @@ use serde_yaml;
 use rusqlite;
 use clap::{Parser, Error};
 use std::fs;
-use std::io::{Read};
+use std::io::Read;
 use std::env;
 
 const DOMAIN:&str = "api.nature.global";
