@@ -9,6 +9,10 @@ Token 作成 : https://home.nature.global/
 ```
 token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+tableを作成する
+```
+CREATE TABLE temp(id integer primary key autoincrement,temp float,stored text,measured text);
+```
 
 ## 実行
 sqlite fileを指定して実行

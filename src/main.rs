@@ -64,16 +64,16 @@ fn main() {
     
     let devices = json.as_array().unwrap();
     let mut temp:f64 = 0.0;
-    let mut create_at = "".to_string();
+    let mut measured = "".to_string();
     for d in devices{
         let o = d.as_object().unwrap();
         temp = o["newest_events"]["te"]["val"].as_f64().unwrap();
-        create_at = o["newest_events"]["te"]["created_at"].as_str().unwrap().to_string().clone();
+        measured = o["newest_events"]["te"]["created_at"].as_str().unwrap().to_string().clone();
         break;
     }
     let conn = open_db(&db_path).unwrap();
-    let mut statement = conn.prepare("insert into temp (temp,created_at) values (?,?)").unwrap();
-    let mut rows = statement.query(rusqlite::params![temp,create_at]).unwrap();
+    let mut statement = conn.prepare("insert into temp (temp,stored,measured) values (?,datetime('now','localtime'),?)").unwrap();
+    let mut rows = statement.query(rusqlite::params![temp,measured]).unwrap();
     while let Some(row) = rows.next().unwrap() {
         println!("{:?}",row);
     }
