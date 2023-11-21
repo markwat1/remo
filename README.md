@@ -7,7 +7,8 @@ Token 作成 : https://home.nature.global/
 ~/.remo/token.yml
 にtoken を記述
 ```
-token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+remo: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+openweather: xxxxxxxxxxxxxxxxxxxxxxxx
 ```
 tableを作成する
 ```
