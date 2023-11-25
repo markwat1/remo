@@ -136,9 +136,6 @@ fn main() {
     let weather = get_weather(token.weatherapi).unwrap();
     let conn = open_db(&db_path).unwrap();
     let mut statement = conn.prepare("insert into temp (stored,room_temp,room_measured,weather_temp,weather_measured) values (datetime('now','localtime'),?,?,?,?)").unwrap();
-    let mut rows = statement.query(rusqlite::params![room.temp,room.measured,weather.temp,weather.measured]).unwrap();
-    while let Some(row) = rows.next().unwrap() {
-        println!("{:?}",row);
-    }
+    let mut _rows = statement.query(rusqlite::params![room.temp,room.measured,weather.temp,weather.measured]).unwrap();
 }
 
