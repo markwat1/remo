@@ -22,7 +22,7 @@ const WEATHERAPI_VERSION:&str = "v1";
 const WEATHERAPI_API:&str = "current.json";
 const WEATHERAPI_CITY:&str = "Himeji";
 const WEATHERAPI_AQI:&str = "no";
-// https://api.weatherapi.com/v1/current.json?key=0ce84a41521c4e43a8312031232111&q=Himeji&aqi=no
+
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about)]
